@@ -6,7 +6,10 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-spl_404 = "6FXaUKgxnXmYS6BJGm2LcMZDJrVsYtWg8Kev8D3Jd1uM"
+spl_404 = "5iGeLAmy8qYhPNwSSh4dg8mXurkWw8sYWJJ7ZH4xvwP2"
+
+[programs.devnet]
+spl_404 = "5iGeLAmy8qYhPNwSSh4dg8mXurkWw8sYWJJ7ZH4xvwP2"
 
 [registry]
 url = "https://api.apr.dev"
@@ -17,3 +20,4 @@ wallet = "~/.config/solana/id.json"
 
 [scripts]
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+create-mystery-box = "cd sdk && ts-node src/createMysteryBox.ts"

@@ -1,1 +1,1 @@
-pub const PROGRAM_ID: &str = "tMBvM2ioL9UuKM3HZAPimrkf2WYRuRZGFqgvyg74wAr";
+pub const PROGRAM_ID: &str = "5iGeLAmy8qYhPNwSSh4dg8mXurkWw8sYWJJ7ZH4xvwP2";
