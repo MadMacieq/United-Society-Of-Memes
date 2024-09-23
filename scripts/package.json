@@ -34,7 +34,8 @@
     "@solana/spl-token": "0.4.6",
     "@solana/web3.js": "1.93.1",
     "bs58": "^5.0.0",
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "inquirer": "^11.0.2"
   },
   "devDependencies": {
     "@types/bn.js": "^5.1.0",

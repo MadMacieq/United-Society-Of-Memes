@@ -1,7 +1,7 @@
 import { AnchorProvider, BN, Program, Wallet } from '@coral-xyz/anchor'
 import { ComputeBudgetProgram, Connection, PublicKey } from '@solana/web3.js'
 import { Spl404 } from './types/spl_404'
-import IDL from './types/idl_spl_404.json'
+import IDL from './types/spl_404.json'
 import {
   BurnToken,
   CreateToken,
@@ -22,7 +22,7 @@ import {
   getMintAddressSync
 } from './utils/address'
 
-export default class TriadSpl404 {
+export default class Spl404Manager {
   provider: AnchorProvider
   program: Program<Spl404>
 
@@ -162,7 +162,7 @@ export default class TriadSpl404 {
         signer: wallet,
         guard: Guard,
         mysteryBox: MysteryBox,
-        payerAta: PayerATA,
+        // payerAta: PayerATA,
         treasuryAccount: nft.tresuaryAccount
       })
 
@@ -220,7 +220,7 @@ export default class TriadSpl404 {
       .accounts({
         signer: this.provider.wallet.publicKey,
         mint: token.mint,
-        payerAta: PayerAta
+        // payerAta: PayerAta
       })
 
     if (options?.microLamports) {
@@ -305,7 +305,7 @@ export default class TriadSpl404 {
         payerAta: PayerAta,
         mint: token.mint,
         mysteryBox: MysteryBox,
-        toAta: ToAta
+        // toAta: ToAta
       })
 
     if (options?.microLamports) {
@@ -341,7 +341,7 @@ export default class TriadSpl404 {
         tokenToAta: TokenToATA,
         nftFromAta: NftFromATA,
         nftMint: swap.nftMint,
-        nftToAta: NftToATA,
+        // nftToAta: NftToATA,
         signer: swap.wallet
       })
 
@@ -374,7 +374,7 @@ export default class TriadSpl404 {
       tokenToAta: TokenToATA,
       nftFromAta: NftFromATA,
       nftMint: swap.nftMint,
-      nftToAta: NftToATA,
+      // nftToAta: NftToATA,
       signer: swap.wallet
     })
 

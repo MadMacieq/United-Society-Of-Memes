@@ -1,6 +1,6 @@
 import fs from 'fs'
 import { Connection, Keypair, PublicKey } from '@solana/web3.js'
-import TriadSpl404 from './index'
+import Spl404Manager from './spl404Manager'
 import axios from 'axios'
 import { BN, Wallet } from '@coral-xyz/anchor'
 import {
@@ -17,7 +17,7 @@ export default class Test {
   )
   connection = new Connection(this.rpc_file.toString(), 'confirmed')
   wallet = new Wallet(this.Keypair)
-  triadSpl404 = new TriadSpl404(this.connection, this.wallet)
+  triadSpl404 = new Spl404Manager(this.connection, this.wallet)
   mysteryBoxName = 'Triad'
   guard = 'Guard 1'
   tokenSymbol = 'tTRIAD'

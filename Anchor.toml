@@ -20,4 +20,6 @@ wallet = "~/.config/solana/id.json"
 
 [scripts]
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
-create-mystery-box = "cd sdk && ts-node src/createMysteryBox.ts"
+create-mystery-box = "cd scripts && ts-node src/commands/createMysteryBox.ts"
+get-mystery-box = "cd scripts && ts-node src/commands/getMysteryBox.ts"
+create-guard = "cd scripts && ts-node src/commands/createGuard.ts"
