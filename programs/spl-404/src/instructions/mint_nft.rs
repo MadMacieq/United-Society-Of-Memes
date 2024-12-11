@@ -99,6 +99,7 @@ pub fn mint_nft(ctx: Context<MintNft>, args: MintNftArgs) -> Result<()> {
     let transfer_instruction =
         system_instruction::transfer(&from_account.key, &to_account.key, guard.price);
 
+    // Transfer payment for the NFT
     anchor_lang::solana_program::program::invoke(
         &transfer_instruction,
         &[
@@ -120,6 +121,7 @@ pub fn mint_nft(ctx: Context<MintNft>, args: MintNftArgs) -> Result<()> {
     let lamports =
         data_len as u64 * DEFAULT_LAMPORTS_PER_BYTE_YEAR * DEFAULT_EXEMPTION_THRESHOLD as u64;
 
+    // Pay for storage for mint account
     transfer(
         CpiContext::new(
             ctx.accounts.system_program.to_account_info(),
@@ -148,6 +150,7 @@ pub fn mint_nft(ctx: Context<MintNft>, args: MintNftArgs) -> Result<()> {
         args.uri.clone(),
     );
 
+    // Initialize NFT
     invoke_signed(
         init_token_meta_data_ix,
         &[
@@ -162,6 +165,7 @@ pub fn mint_nft(ctx: Context<MintNft>, args: MintNftArgs) -> Result<()> {
 
     msg!("ATA created");
 
+    // Mint NFT
     mint_to(
         CpiContext::new(
             ctx.accounts.token_program.to_account_info(),
@@ -176,6 +180,7 @@ pub fn mint_nft(ctx: Context<MintNft>, args: MintNftArgs) -> Result<()> {
 
     msg!("Token Minted");
 
+    // Set None mint authority, so no more tokens can be minted
     set_authority(
         CpiContext::new(
             ctx.accounts.token_program.to_account_info(),

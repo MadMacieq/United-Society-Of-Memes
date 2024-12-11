@@ -8,7 +8,13 @@ pub struct CreateMysteryBox<'info> {
     #[account(mut)]
     pub signer: Signer<'info>,
 
-    #[account(init, payer = signer, space = MysteryBox::SPACE, seeds = [b"mystery_box", args.name.as_bytes()], bump)]
+    #[account(
+        init,
+        payer = signer,
+        space = MysteryBox::SPACE,
+        seeds = [b"mystery_box", args.name.as_bytes()],
+        bump
+    )]
     pub mystery_box: Box<Account<'info, MysteryBox>>,
 
     pub system_program: Program<'info, System>,
@@ -27,7 +33,7 @@ pub fn create_mystery_box(
     mystery_box.nft_supply = args.nft_supply;
     mystery_box.nft_minteds = 0;
     mystery_box.token_symbol = args.token_symbol;
-    mystery_box.token_supply = args.nft_supply as u64 * args.token_per_nft;
+    mystery_box.token_supply = (args.nft_supply as u64) * args.token_per_nft;
     mystery_box.decimals = args.decimals;
     mystery_box.bump = ctx.bumps.mystery_box;
     mystery_box.token_per_nft = args.token_per_nft;

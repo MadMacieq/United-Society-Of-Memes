@@ -1,7 +1,7 @@
 import { AnchorProvider, BN, Program, Wallet } from '@coral-xyz/anchor'
 import { ComputeBudgetProgram, Connection, PublicKey } from '@solana/web3.js'
-import { Spl404 } from './types/spl_404'
-import IDL from './types/spl_404.json'
+import { Spl404 } from '../../target/types/spl_404'
+import IDL from '../../target/idl/spl_404.json'
 import {
   BurnToken,
   CreateToken,
@@ -158,12 +158,12 @@ export default class Spl404Manager {
         name: nft.name,
         uri: nft.uri
       })
-      .accounts({
+      .accountsPartial({
         signer: wallet,
         guard: Guard,
         mysteryBox: MysteryBox,
-        // payerAta: PayerATA,
-        treasuryAccount: nft.tresuaryAccount
+        treasuryAccount: nft.tresuaryAccount,
+        payerAta: PayerATA
       })
 
     if (options?.microLamports) {
@@ -210,17 +210,16 @@ export default class Spl404Manager {
       this.program.programId,
       token.mysteryBoxName
     )
-
     const PayerAta = getPayerATASync(MysteryBox, token.mint)
 
     const method = this.program.methods
       .mintToken({
         mysteryBoxName: token.mysteryBoxName
       })
-      .accounts({
+      .accountsPartial({
         signer: this.provider.wallet.publicKey,
         mint: token.mint,
-        // payerAta: PayerAta
+        payerAta: PayerAta
       })
 
     if (options?.microLamports) {
