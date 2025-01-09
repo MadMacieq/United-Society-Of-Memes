@@ -7,7 +7,10 @@ import path from 'path';
 
 (async () => {
   // Initialize Umi with the desired RPC endpoint
-  const umi = createUmi('https://api.devnet.solana.com').use(irysUploader());
+  let umi = createUmi('https://api.devnet.solana.com')
+
+  // Select the Irys uploader (uploads to Arweave)
+  umi.use(irysUploader())
 
   // Read the image file to be used for the collection
   const imagePath = path.resolve(__dirname, '..', 'assets', 'COLLECTION_IMAGE.JPG');
@@ -22,21 +25,20 @@ import path from 'path';
   console.log(imageUri)
 
   // Define the metadata for the collection
-  const metadata = {
-    name: 'My Collection',
-    description: 'This is my NFT collection.',
-    image: imageUri,
-    // external_url: 'https://example.com',
-    properties: {
-      files: [
-        {
-          uri: imageUri,
-          type: 'image/jpeg',
-        },
-      ],
-      category: 'image',
-    },
-  };
+  // const metadata = {
+  //   name: 'My Collection',
+  //   description: 'This is my NFT collection.',
+  //   image: imageUri,
+  //   properties: {
+  //     files: [
+  //       {
+  //         uri: imageUri,
+  //         type: 'image/jpeg',
+  //       },
+  //     ],
+  //     category: 'image',
+  //   },
+  // };
 
   // // Upload the metadata JSON to Arweave
   // const metadataUri = await umi.uploader.uploadJson(metadata);
