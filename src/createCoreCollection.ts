@@ -1,57 +1,38 @@
-import { createGenericFile} from '@metaplex-foundation/umi';
+import {createSignerFromKeypair, generateSigner, signerIdentity} from '@metaplex-foundation/umi';
 import { createUmi } from '@metaplex-foundation/umi-bundle-defaults';
-import { irysUploader } from '@metaplex-foundation/umi-uploader-irys';
 import fs from 'fs';
 import path from 'path';
+import {homedir} from "node:os";
+import {createCollection, fetchCollection, mplCore} from '@metaplex-foundation/mpl-core'
 
 
 (async () => {
   // Initialize Umi with the desired RPC endpoint
-  let umi = createUmi('https://api.devnet.solana.com')
+  const umi = createUmi('https://api.devnet.solana.com')
+    .use(mplCore())
 
-  // Select the Irys uploader (uploads to Arweave)
-  umi.use(irysUploader())
+  // Load signer from file
+  const secretKeyString = fs.readFileSync(path.join(homedir(), '.config/solana/id.json'), 'utf8')
+  const secretKeyArray = JSON.parse(secretKeyString);
+  let keypair = umi.eddsa.createKeypairFromSecretKey(new Uint8Array(secretKeyArray));
+  const signer = createSignerFromKeypair(umi, keypair);
 
-  // Read the image file to be used for the collection
-  const imagePath = path.resolve(__dirname, '..', 'assets', 'COLLECTION_IMAGE.JPG');
-  const imageBuffer = fs.readFileSync(imagePath);
-  const imageFile = createGenericFile(imageBuffer, 'COLLECTION_IMAGE.JPG', {
-    tags: [{ name: 'Content-Type', value: 'image/jpeg' }],
-  });
+  console.log(signer.publicKey)
 
-  // Upload the image to Arweave using the Irys uploader
-  const [imageUri] = await umi.uploader.upload([imageFile]);
+  // Tell Umi to use the new signer.
+  umi.use(signerIdentity(signer))
 
-  console.log(imageUri)
+  const collectionSigner = generateSigner(umi)
 
-  // Define the metadata for the collection
-  // const metadata = {
-  //   name: 'My Collection',
-  //   description: 'This is my NFT collection.',
-  //   image: imageUri,
-  //   properties: {
-  //     files: [
-  //       {
-  //         uri: imageUri,
-  //         type: 'image/jpeg',
-  //       },
-  //     ],
-  //     category: 'image',
-  //   },
-  // };
+  await createCollection(umi, {
+    collection: collectionSigner,
+    name: 'My Collection #1',
+    uri: 'https://arweave.net/M92UyCTGVkztYgK523qs11qSqHujUbNk5VhbzRExxw6',
+  }).sendAndConfirm(umi)
 
-  // // Upload the metadata JSON to Arweave
-  // const metadataUri = await umi.uploader.uploadJson(metadata);
-  //
-  // // Generate a new keypair for the collection asset
-  // const collectionSigner = generateSigner(umi);
-  //
-  // // Create the collection on-chain
-  // await createCollection(umi, {
-  //   collection: collectionSigner,
-  //   name: metadata.name,
-  //   uri: metadataUri,
-  // }).sendAndConfirm(umi);
-  //
-  // console.log('Collection created with address:', collectionSigner.publicKey.toBase58());
+  console.log('Collection address:', collectionSigner.publicKey)
+
+  const collection = await fetchCollection(umi, collectionSigner.publicKey)
+
+  console.log(collection)
 })();
