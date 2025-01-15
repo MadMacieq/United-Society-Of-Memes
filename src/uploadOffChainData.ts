@@ -16,7 +16,7 @@ import {mplCore} from "@metaplex-foundation/mpl-core";
       irysUploader({
         // mainnet address: "https://node1.irys.xyz"
         // devnet address: "https://devnet.irys.xyz"
-        address: 'https://devnet.irys.xyz',
+        address: 'https://arweave.devnet.irys.xyz',
       })
     )
 
@@ -32,26 +32,28 @@ import {mplCore} from "@metaplex-foundation/mpl-core";
   umi.use(signerIdentity(signer))
 
   // Read the image file to be used for the collection
-  const imagePath = path.resolve(__dirname, '..', 'assets', 'COLLECTION_IMAGE.JPG');
+  const imagePath = path.resolve(__dirname, '..', 'assets', 'COLLECTION_IMAGE.jpg');
   const imageBuffer = fs.readFileSync(imagePath);
-  const imageFile = createGenericFile(imageBuffer, 'COLLECTION_IMAGE.JPG', {
+  const imageFile = createGenericFile(imageBuffer, 'COLLECTION_IMAGE.jpg', {
     tags: [{name: 'Content-Type', value: 'image/jpeg'}],
   });
 
   // Upload the image to Arweave using the Irys uploader
   const [imageUri] = await umi.uploader.upload([imageFile]);
 
-  console.log("Image URI:", imageUri)
+  // console.log("Image URI:", imageUri)
+  const imageUriDevnet = 'https://arweave.devnet.irys.xyz/' + new URL(imageUri).pathname.split('/')[1]
+  console.log("Image URI devnet:", imageUriDevnet)
 
   // Define the metadata for the collection according to doc: https://developers.metaplex.com/token-metadata/token-standard#the-non-fungible-standard
   const metadata = {
     name: 'My Collection #1',
     description: 'This is my NFT collection.',
-    image: imageUri,
+    image: imageUriDevnet,
     properties: {
       files: [
         {
-          uri: imageUri,
+          uri: imageUriDevnet,
           type: 'image/jpeg',
         },
       ],
@@ -62,5 +64,7 @@ import {mplCore} from "@metaplex-foundation/mpl-core";
   // Upload the metadata JSON to Arweave
   const metadataUri = await umi.uploader.uploadJson(metadata);
 
-  console.log("Metadata URI:", metadataUri)
+  // console.log("Metadata URI:", metadataUri)
+  const metadataUriDevnet = 'https://arweave.devnet.irys.xyz/' + new URL(metadataUri).pathname.split('/')[1]
+  console.log("Metadata URI devnet:", metadataUriDevnet)
 })();

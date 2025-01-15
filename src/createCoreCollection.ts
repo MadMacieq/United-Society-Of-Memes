@@ -26,8 +26,8 @@ import {createCollection, fetchCollection, mplCore} from '@metaplex-foundation/m
 
   await createCollection(umi, {
     collection: collectionSigner,
-    name: 'My Collection #1',
-    uri: 'https://arweave.net/M92UyCTGVkztYgK523qs11qSqHujUbNk5VhbzRExxw6',
+    name: 'My Collection #3',
+    uri: 'https://arweave.devnet.irys.xyz/EuFP3hq9TXdM6g5somUb5ZPH5bgzDGqSwcGP3Pc5A1z7',
   }).sendAndConfirm(umi)
 
   console.log('Collection address:', collectionSigner.publicKey)

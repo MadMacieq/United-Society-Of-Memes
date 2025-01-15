@@ -30,13 +30,13 @@ import {ruleSet} from "@metaplex-foundation/mpl-core/dist/src/plugins/types";
   // Tell Umi to use the new signer.
   umi.use(signerIdentity(signer))
 
-  const collectionAddress = publicKey('DeJBrFhUeVfiVLiH9cay5bMsdkgCmqq2ymeALDLzrPSK')
+  const collectionAddress = publicKey('AsF8FL5SHk2LGnr1EerZyAQZTS5oAnFdchniGikZECpe')
 
-  await updateCollection(umi, {
-    collection: collectionAddress,
-    name: 'My Collection #2',
-    uri: 'https://arweave.net/M92UyCTGVkztYgK523qs11qSqHujUbNk5VhbzRExxw6',
-  }).sendAndConfirm(umi)
+  // await updateCollection(umi, {
+  //   collection: collectionAddress,
+  //   name: 'My Collection #3',
+  //   uri: 'https://arweave.devnet.irys.xyz/EuFP3hq9TXdM6g5somUb5ZPH5bgzDGqSwcGP3Pc5A1z7',
+  // }).sendAndConfirm(umi)
 
   // await addCollectionPlugin(umi, {
   //   collection: collectionAddress,
