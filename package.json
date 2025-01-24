@@ -8,7 +8,8 @@
     "uploadOffChainData": "ts-node src/uploadOffChainData.ts",
     "createCoreCollection": "ts-node src/createCoreCollection.ts",
     "updateCoreCollection": "ts-node src/updateCoreCollection.ts",
-    "createAsset": "ts-node src/createAsset.ts"
+    "createAsset": "ts-node src/createAsset.ts",
+    "createToken": "ts-node src/createToken.ts"
   },
   "keywords": [],
   "author": "",
