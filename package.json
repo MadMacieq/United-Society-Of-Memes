@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "uploadOffchainData": "ts-node src/uploadOffChainData.ts",
+    "uploadOffChainData": "ts-node src/uploadOffChainData.ts",
     "createCoreCollection": "ts-node src/createCoreCollection.ts",
     "updateCoreCollection": "ts-node src/updateCoreCollection.ts",
-    "createNft": "ts-node src/createNft.ts"
+    "createAsset": "ts-node src/createAsset.ts"
   },
   "keywords": [],
   "author": "",
